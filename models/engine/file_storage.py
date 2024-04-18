@@ -28,9 +28,9 @@ class FileStorage:
             return self.__objects
         else:
             filtered_dict = {}
-            for key, value in self.__objects.items():
-                if type(value) is cls:
-                    filtered_dict[key] = value
+            for k, val in self.__objects.items():
+                if type(val) is cls:
+                    filtered_dict[k] = val
             return filtered_dict
 
     def delete(self, obj=None):
@@ -50,8 +50,8 @@ class FileStorage:
         """Saves storage dictionary to file"""
         with open(self.__file_path, 'w') as file:
             temp = {}
-            for key, val in self.__objects.items():
-                temp[key] = val.to_dict()
+            for key, vl in self.__objects.items():
+                temp[key] = vl.to_dict()
             json.dump(temp, file)
 
     def reload(self):
@@ -61,8 +61,8 @@ class FileStorage:
             temp = {}
             with open(self.__file_path, 'r') as file:
                 temp = json.load(file)
-                for key, val in temp.items():
-                    self.all()[key] = classes[val['__class__']](**val)
+                for key, vl in temp.items():
+                    self.all()[key] = classes[vl['__class__']](**vl)
 
     def close(self):
         """Closes storage engine."""
